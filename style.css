@@ -16,10 +16,64 @@
 }
 
 body {
-    background-color: var(--bg-color);
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Мягкий серый градиент по умолчанию */
+    background-attachment: fixed; /* Чтобы градиент не ездил при скролле */
     color: var(--text-color);
-    padding-bottom: 70px; /* Space for tab bar */
+    padding-bottom: 70px;
     -webkit-tap-highlight-color: transparent;
+    min-height: 100vh;
+}
+
+/* Более выраженный цветной градиент для фона приложения, если хочется цвета */
+.gradient-bg {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F0F4C3 100%); /* Белый -> Нежно-лаймовый */
+}
+
+/* --- Settings View --- */
+.settings-list {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.settings-item {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #F5F5F5;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.settings-item:last-child {
+    border-bottom: none;
+}
+
+.settings-item:active {
+    background-color: #FAFAFA;
+}
+
+.settings-icon-box {
+    width: 36px;
+    height: 36px;
+    background-color: #FFF9C4; /* Light yellow */
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: #FBC02D;
+}
+
+.settings-text {
+    flex-grow: 1;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.settings-arrow {
+    color: #BDBDBD;
 }
 
 /* --- Views --- */
@@ -250,7 +304,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50%;
+    width: 33.33%; /* Делим на 3 */
     height: 100%;
     color: #BDBDBD;
     cursor: pointer;

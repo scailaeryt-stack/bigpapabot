@@ -10,7 +10,7 @@
     <!-- Icons Font (using simple text/svg fallback in CSS or CDN) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="gradient-bg">
 
     <div id="app">
         <!-- SHOP VIEW -->
@@ -42,6 +42,41 @@
                     <span>Получено монет:</span>
                     <strong style="color: var(--primary-yellow);">0</strong>
                 </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS VIEW (Tab 3) -->
+        <div id="settings-view" class="view">
+            <h2 style="margin-bottom: 16px;">Настройки</h2>
+            
+            <div class="settings-list">
+                <div class="settings-item" onclick="tg.showAlert('Раздел Privacy Policy в разработке')">
+                    <div class="settings-icon-box">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="settings-text">Privacy Policy</div>
+                    <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
+                </div>
+                
+                <div class="settings-item" onclick="tg.showAlert('Раздел Terms of Use в разработке')">
+                    <div class="settings-icon-box">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="settings-text">Terms of Use</div>
+                    <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
+                </div>
+
+                <div class="settings-item" onclick="tg.showAlert('Напишите нам: @support_bot')">
+                    <div class="settings-icon-box">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="settings-text">Support</div>
+                    <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; text-align: center; color: var(--text-secondary); font-size: 12px;">
+                Version 1.0.0
             </div>
         </div>
 
@@ -86,6 +121,10 @@
             <div class="tab-item" id="tab-profile" onclick="switchTab('profile')">
                 <i class="fas fa-user tab-icon"></i>
                 <span class="tab-label">Профиль</span>
+            </div>
+            <div class="tab-item" id="tab-settings" onclick="switchTab('settings')">
+                <i class="fas fa-cog tab-icon"></i>
+                <span class="tab-label">Настройки</span>
             </div>
         </nav>
     </div>

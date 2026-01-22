@@ -23,6 +23,7 @@ tg.expand(); // Раскрыть на весь экран
 const shopListEl = document.getElementById('shop-list');
 const shopView = document.getElementById('shop-view');
 const profileView = document.getElementById('profile-view');
+const settingsView = document.getElementById('settings-view');
 const claimView = document.getElementById('claim-view');
 const userProfileView = document.getElementById('user-profile-view');
 const successOverlay = document.getElementById('success-overlay');
@@ -48,19 +49,30 @@ function renderShop() {
 // Навигация по табам
 function switchTab(tabName) {
     // Скрываем все views кроме claim (он модальный по сути)
-    claimView.style.display = 'none';
+    claimView.style.display = 'none'; // Force hide claim view
+    claimView.classList.remove('active');
     
     // Сброс активных классов у табов
     document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
     
+    // Скрываем все основные вьюшки
+    shopView.classList.remove('active');
+    userProfileView.classList.remove('active');
+    if (settingsView) settingsView.classList.remove('active');
+
     if (tabName === 'shop') {
         shopView.classList.add('active');
-        userProfileView.classList.remove('active');
         document.getElementById('tab-shop').classList.add('active');
     } else if (tabName === 'profile') {
         shopView.classList.remove('active');
         userProfileView.classList.add('active');
+        settingsView.classList.remove('active');
         document.getElementById('tab-profile').classList.add('active');
+    } else if (tabName === 'settings') {
+        shopView.classList.remove('active');
+        userProfileView.classList.remove('active');
+        settingsView.classList.add('active');
+        document.getElementById('tab-settings').classList.add('active');
     }
 }
 
@@ -89,6 +101,7 @@ window.openClaimView = function(gameId) {
         
         // Показываем claim-view
         claimView.classList.add('active');
+        claimView.style.display = 'block'; // Ensure it's visible
         
         // Скрываем таббар на странице оформления (опционально, если нужно больше места)
         // document.querySelector('.tab-bar').style.display = 'none'; 
