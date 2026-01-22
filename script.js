@@ -131,11 +131,23 @@ window.submitClaim = function() {
 };
 
 // Инициализация
-renderShop();
-
-// Установка имени пользователя если доступно
-if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    const user = tg.initDataUnsafe.user;
-    document.getElementById('username-display').textContent = 
-        `${user.first_name} ${user.last_name || ''}`.trim();
+// Принудительно сбрасываем состояние UI при загрузке
+function initApp() {
+    renderShop();
+    switchTab('shop'); // Всегда начинаем с магазина
+    
+    // Скрываем оверлеи если они остались
+    successOverlay.classList.remove('active');
+    claimView.classList.remove('active');
+    
+    // Установка имени пользователя если доступно
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const user = tg.initDataUnsafe.user;
+        document.getElementById('username-display').textContent = 
+            `${user.first_name} ${user.last_name || ''}`.trim();
+    }
 }
+
+// Запускаем инициализацию
+initApp();
+
