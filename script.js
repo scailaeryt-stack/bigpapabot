@@ -66,18 +66,38 @@ function switchTab(tabName) {
 
 // Открытие страницы "Получить" (Game Profile)
 window.openClaimView = function(gameId) {
+    console.log("Открываем игру:", gameId);
     const game = games.find(g => g.id === gameId);
-    if (!game) return;
+    if (!game) {
+        tg.showAlert('Ошибка: Игра не найдена!');
+        return;
+    }
 
-    // Заполнение данных
-    document.getElementById('claim-title').textContent = game.name;
-    document.getElementById('claim-reward').textContent = `Вы получите: ${game.reward}`;
-    document.getElementById('game-id-input').value = ''; // Очистить инпут
+    try {
+        // Заполнение данных
+        document.getElementById('claim-title').textContent = game.name;
+        document.getElementById('claim-reward').textContent = `Вы получите: ${game.reward}`;
+        document.getElementById('game-id-input').value = ''; // Очистить инпут
+        
+        // Установка иконки (пока заглушка цветом, можно добавить картинки)
+        const iconEl = document.querySelector('#claim-view .claim-icon');
+        iconEl.style.backgroundColor = '#FFD600'; // Желтый для примера
 
-    // Переключение видимости
-    shopView.classList.remove('active');
-    userProfileView.classList.remove('active');
-    claimView.classList.add('active');
+        // Переключение видимости
+        // Скрываем все views
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        
+        // Показываем claim-view
+        claimView.classList.add('active');
+        
+        // Скрываем таббар на странице оформления (опционально, если нужно больше места)
+        // document.querySelector('.tab-bar').style.display = 'none'; 
+        
+        console.log("Переход выполнен успешно");
+    } catch (e) {
+        console.error(e);
+        tg.showAlert('Ошибка отображения: ' + e.message);
+    }
 };
 
 // Возврат назад

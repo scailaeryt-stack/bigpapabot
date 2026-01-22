@@ -24,13 +24,13 @@ body {
 
 /* --- Views --- */
 .view {
-    display: none;
+    display: none !important; /* Force hide */
     padding: 16px;
     animation: fadeIn 0.2s ease-in-out;
 }
 
 .view.active {
-    display: block;
+    display: block !important; /* Force show */
 }
 
 @keyframes fadeIn {
