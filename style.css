@@ -1,0 +1,271 @@
+:root {
+    --primary-yellow: #FFD600;
+    --primary-green: #00C853;
+    --bg-color: #F5F5F5;
+    --card-bg: #FFFFFF;
+    --text-color: #212121;
+    --text-secondary: #757575;
+    --border-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding-bottom: 70px; /* Space for tab bar */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Views --- */
+.view {
+    display: none;
+    padding: 16px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Shop List --- */
+.game-item {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.game-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #E0E0E0; /* Placeholder color */
+    border-radius: 10px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.game-info {
+    flex-grow: 1;
+    margin-right: 8px;
+}
+
+.game-title {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.game-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-get {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.btn-get:active {
+    transform: scale(0.95);
+}
+
+/* --- Claim View (Game Profile) --- */
+.claim-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    margin-top: 20px;
+}
+
+.claim-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #E0E0E0;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    background-size: cover;
+    background-position: center;
+}
+
+.claim-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.main-input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #E0E0E0;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    outline: none;
+    background: var(--card-bg);
+}
+
+.main-input:focus {
+    border-color: var(--primary-yellow);
+}
+
+.reward-info {
+    background-color: #FFF9C4; /* Light yellow */
+    padding: 12px;
+    border-radius: var(--border-radius);
+    color: #FBC02D;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.btn-main {
+    width: 100%;
+    background-color: var(--primary-yellow);
+    color: var(--text-color);
+    border: none;
+    padding: 16px;
+    border-radius: var(--border-radius);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-back {
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Profile Tab --- */
+.profile-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.profile-avatar {
+    width: 70px;
+    height: 70px;
+    background-color: var(--primary-yellow);
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* --- Success Screen --- */
+.success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.success-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.success-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+/* --- Tab Bar --- */
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: var(--card-bg);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #E0E0E0;
+    z-index: 100;
+}
+
+.tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    color: #BDBDBD;
+    cursor: pointer;
+}
+
+.tab-item.active {
+    color: var(--primary-green);
+}
+
+.tab-icon {
+    font-size: 24px;
+    margin-bottom: 2px;
+}
+
+.tab-label {
+    font-size: 10px;
+    font-weight: 500;
+}
