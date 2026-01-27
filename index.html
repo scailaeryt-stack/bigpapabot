@@ -5,20 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Game Shop</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Telegram WebApp Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Icons Font (using simple text/svg fallback in CSS or CDN) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="gradient-bg">
 
     <div id="app">
         <!-- SHOP VIEW -->
-        <div id="shop-view" class="view active">
+        <div id="shop-view" class="view">
             <h2 style="margin-bottom: 16px;">Магазин</h2>
-            <div id="shop-list">
-                <!-- Games will be injected here via JS -->
-            </div>
+            <div id="shop-list"></div>
         </div>
 
         <!-- USER PROFILE VIEW (Tab 2) -->
@@ -50,7 +46,7 @@
             <h2 style="margin-bottom: 16px;">Настройки</h2>
             
             <div class="settings-list">
-                <div class="settings-item" onclick="tg.showAlert('Раздел Privacy Policy в разработке')">
+                <div class="settings-item" onclick="openPrivacy()">
                     <div class="settings-icon-box">
                         <i class="fas fa-shield-alt"></i>
                     </div>
@@ -58,7 +54,7 @@
                     <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
                 </div>
                 
-                <div class="settings-item" onclick="tg.showAlert('Раздел Terms of Use в разработке')">
+                <div class="settings-item" onclick="openTerms()">
                     <div class="settings-icon-box">
                         <i class="fas fa-file-contract"></i>
                     </div>
@@ -66,7 +62,7 @@
                     <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
                 </div>
 
-                <div class="settings-item" onclick="tg.showAlert('Напишите нам: @support_bot')">
+                <div class="settings-item" onclick="openSupport()">
                     <div class="settings-icon-box">
                         <i class="fas fa-headset"></i>
                     </div>
@@ -76,13 +72,13 @@
             </div>
 
             <div style="margin-top: 20px; text-align: center; color: var(--text-secondary); font-size: 12px;">
-                Version 1.0.0
+                Version 1.1.0
             </div>
         </div>
 
         <!-- CLAIM VIEW (Game "Profile" / Detail) -->
         <div id="claim-view" class="view">
-            <button class="btn-back" onclick="goBack()">
+            <button class="btn-back" onclick="switchTab('shop')">
                 <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
             </button>
             
@@ -94,6 +90,7 @@
             <div class="input-group">
                 <label class="input-label">Введите ваш ID</label>
                 <input type="text" class="main-input" id="game-id-input" placeholder="Например: 12345678">
+                <div id="error-msg" class="error-message">Некорректный ID</div>
             </div>
 
             <div class="reward-info" id="claim-reward">
@@ -101,6 +98,68 @@
             </div>
 
             <button class="btn-main" onclick="submitClaim()">Получить</button>
+        </div>
+
+        <!-- PRIVACY POLICY VIEW -->
+        <div id="privacy-view" class="view">
+            <button class="btn-back" onclick="closeSubPage()">
+                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+            </button>
+            <h2>Privacy Policy</h2>
+            <div class="legal-content">
+                <span class="legal-date">Last Updated: January 15, 2026</span>
+                
+                <h3>1. Introduction</h3>
+                <p>Welcome to our Privacy Policy. Your privacy is critically important to us. This policy outlines how we collect, use, and protect your personal information when you use our application.</p>
+
+                <h3>2. Information We Collect</h3>
+                <p>We collect minimal data necessary for the functionality of the application, including your Telegram User ID and the Game IDs you provide for transactions.</p>
+
+                <h3>3. Data Usage</h3>
+                <p>Your data is used solely to process your requests for in-game currency and items. We do not share your personal information with third parties except as required by law.</p>
+                
+                <h3>4. Security</h3>
+                <p>We implement a variety of security measures to maintain the safety of your personal information.</p>
+
+                <h3>5. Contact Us</h3>
+                <p>If you have any questions about this Privacy Policy, please contact us via the Support section.</p>
+            </div>
+        </div>
+
+        <!-- TERMS OF USE VIEW -->
+        <div id="terms-view" class="view">
+            <button class="btn-back" onclick="closeSubPage()">
+                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+            </button>
+            <h2>Terms of Use</h2>
+            <div class="legal-content">
+                <span class="legal-date">Last Updated: January 15, 2026</span>
+
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing and using this application, you accept and agree to be bound by the terms and provision of this agreement.</p>
+
+                <h3>2. Use License</h3>
+                <p>Permission is granted to temporarily use this application for personal, non-commercial transitory viewing only.</p>
+
+                <h3>3. Disclaimer</h3>
+                <p>The materials on this application are provided "as is". We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties.</p>
+
+                <h3>4. Limitations</h3>
+                <p>In no event shall we or our suppliers be liable for any damages (including, without limitation, damages for loss of data or profit) arising out of the use or inability to use the application.</p>
+            </div>
+        </div>
+
+        <!-- SUPPORT VIEW -->
+        <div id="support-view" class="view">
+            <button class="btn-back" onclick="closeSubPage()">
+                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+            </button>
+            <h2>Support</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Опишите вашу проблему, и мы свяжемся с вами.</p>
+            
+            <textarea id="support-msg" class="support-textarea" placeholder="Введите ваше сообщение здесь..."></textarea>
+            
+            <button class="btn-main" onclick="submitSupport()">Отправить сообщение</button>
         </div>
 
         <!-- SUCCESS OVERLAY -->

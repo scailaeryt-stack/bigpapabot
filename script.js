@@ -1,32 +1,143 @@
-// Конфигурация игр
+// Конфигурация игр с правилами валидации
+// validateType: 'numeric' (только цифры), 'tag' (начинается с #), 'username' (буквы и цифры)
 const games = [
-    { id: 'brawl', name: 'Brawl Stars', subtitle: 'Гемы и бравлеры', reward: '170 Гемов' },
-    { id: 'cod', name: 'Call of Duty: Mobile', subtitle: 'CP и скины', reward: '880 CP' },
-    { id: 'clash', name: 'Clash of Clans', subtitle: 'Гемы и золото', reward: '500 Гемов' },
-    { id: 'genshin', name: 'Genshin Impact', subtitle: 'Кристаллы сотворения', reward: '300 Кристаллов' },
-    { id: 'hayday', name: 'Hay Day', subtitle: 'Алмазы и монеты', reward: '100 Алмазов' },
-    { id: 'homescapes', name: 'Homescapes', subtitle: 'Монеты и звезды', reward: '1000 Монет' },
-    { id: 'lts', name: 'Left To Survive', subtitle: 'Золото и оружие', reward: '500 Золота' },
-    { id: 'mlbb', name: 'Mobile Legends', subtitle: 'Алмазы и герои', reward: '250 Алмазов' },
-    { id: 'pubg', name: 'PUBG Mobile', subtitle: 'UC и ящики', reward: '325 UC' },
-    { id: 'roblox', name: 'Roblox', subtitle: 'Робуксы', reward: '400 Robux' },
-    { id: 'standoff', name: 'Standoff 2', subtitle: 'Голда и скины', reward: '1000 Голды' },
-    { id: 'wotb', name: 'World of Tanks Blitz', subtitle: 'Золото и премиум', reward: '1500 Золота' },
-    { id: 'durak', name: 'Дурак Онлайн', subtitle: 'Монеты и смайлы', reward: '25000 Монет' }
+    { 
+        id: 'brawl', 
+        name: 'Brawl Stars', 
+        subtitle: 'Гемы и бравлеры', 
+        reward: '170 Гемов',
+        placeholder: '#JY8G9...',
+        validateType: 'tag',
+        errorMsg: 'ID должен начинаться с # и содержать 3-12 символов'
+    },
+    { 
+        id: 'cod', 
+        name: 'Call of Duty: Mobile', 
+        subtitle: 'CP и скины', 
+        reward: '880 CP',
+        placeholder: '67426...',
+        validateType: 'numeric',
+        errorMsg: 'UID должен состоять только из цифр'
+    },
+    { 
+        id: 'clash', 
+        name: 'Clash of Clans', 
+        subtitle: 'Гемы и золото', 
+        reward: '500 Гемов',
+        placeholder: '#LCY8...',
+        validateType: 'tag',
+        errorMsg: 'Тег должен начинаться с #'
+    },
+    { 
+        id: 'genshin', 
+        name: 'Genshin Impact', 
+        subtitle: 'Кристаллы сотворения', 
+        reward: '300 Кристаллов',
+        placeholder: '700123...',
+        validateType: 'numeric',
+        errorMsg: 'UID должен состоять из цифр (9 символов)'
+    },
+    { 
+        id: 'hayday', 
+        name: 'Hay Day', 
+        subtitle: 'Алмазы и монеты', 
+        reward: '100 Алмазов',
+        placeholder: '#P8...',
+        validateType: 'tag',
+        errorMsg: 'Тег фермы должен начинаться с #'
+    },
+    { 
+        id: 'homescapes', 
+        name: 'Homescapes', 
+        subtitle: 'Монеты и звезды', 
+        reward: '1000 Монет',
+        placeholder: 'ID поддержки...',
+        validateType: 'any', 
+        errorMsg: ''
+    },
+    { 
+        id: 'lts', 
+        name: 'Left To Survive', 
+        subtitle: 'Золото и оружие', 
+        reward: '500 Золота',
+        placeholder: 'ID игрока',
+        validateType: 'numeric',
+        errorMsg: 'ID должен быть числовым'
+    },
+    { 
+        id: 'mlbb', 
+        name: 'Mobile Legends', 
+        subtitle: 'Алмазы и герои', 
+        reward: '250 Алмазов',
+        placeholder: '12345678 (1234)',
+        validateType: 'numeric_complex',
+        errorMsg: 'Введите ID и ID сервера (только цифры)'
+    },
+    { 
+        id: 'pubg', 
+        name: 'PUBG Mobile', 
+        subtitle: 'UC и ящики', 
+        reward: '325 UC',
+        placeholder: '51234...',
+        validateType: 'numeric',
+        errorMsg: 'ID должен состоять только из цифр'
+    },
+    { 
+        id: 'roblox', 
+        name: 'Roblox', 
+        subtitle: 'Робуксы', 
+        reward: '400 Robux',
+        placeholder: 'Username',
+        validateType: 'username',
+        errorMsg: 'Имя пользователя не найдено'
+    },
+    { 
+        id: 'standoff', 
+        name: 'Standoff 2', 
+        subtitle: 'Голда и скины', 
+        reward: '1000 Голды',
+        placeholder: 'ID игрока',
+        validateType: 'numeric',
+        errorMsg: 'ID должен быть числовым'
+    },
+    { 
+        id: 'wotb', 
+        name: 'World of Tanks Blitz', 
+        subtitle: 'Золото и премиум', 
+        reward: '1500 Золота',
+        placeholder: 'Никнейм или ID',
+        validateType: 'any',
+        errorMsg: ''
+    },
+    { 
+        id: 'durak', 
+        name: 'Дурак Онлайн', 
+        subtitle: 'Монеты и смайлы', 
+        reward: '25000 Монет',
+        placeholder: 'ID или Ник',
+        validateType: 'any',
+        errorMsg: ''
+    }
 ];
 
 // Инициализация Telegram WebApp
 const tg = window.Telegram.WebApp;
-tg.expand(); // Раскрыть на весь экран
+tg.expand();
 
 // DOM элементы
 const shopListEl = document.getElementById('shop-list');
 const shopView = document.getElementById('shop-view');
-const profileView = document.getElementById('profile-view');
-const settingsView = document.getElementById('settings-view');
-const claimView = document.getElementById('claim-view');
 const userProfileView = document.getElementById('user-profile-view');
+const settingsView = document.getElementById('settings-view');
+
+const claimView = document.getElementById('claim-view');
+const privacyView = document.getElementById('privacy-view');
+const termsView = document.getElementById('terms-view');
+const supportView = document.getElementById('support-view');
+
 const successOverlay = document.getElementById('success-overlay');
+
+let currentGameId = null;
 
 // Рендеринг списка игр
 function renderShop() {
@@ -46,114 +157,170 @@ function renderShop() {
     });
 }
 
+// Утилита для скрытия всех экранов
+function hideAllViews() {
+    document.querySelectorAll('.view').forEach(v => {
+        v.classList.remove('active');
+        // Дополнительная страховка display: none делается через CSS класс,
+        // но можно и тут явно, хотя CSS !important надежнее
+    });
+}
+
 // Навигация по табам
 function switchTab(tabName) {
-    // Скрываем все views кроме claim (он модальный по сути)
-    claimView.style.display = 'none'; // Force hide claim view
-    claimView.classList.remove('active');
-    
-    // Сброс активных классов у табов
+    hideAllViews();
+    // Сброс активных кнопок табов
     document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
-    
-    // Скрываем все основные вьюшки
-    shopView.classList.remove('active');
-    userProfileView.classList.remove('active');
-    if (settingsView) settingsView.classList.remove('active');
 
     if (tabName === 'shop') {
         shopView.classList.add('active');
         document.getElementById('tab-shop').classList.add('active');
     } else if (tabName === 'profile') {
-        shopView.classList.remove('active');
         userProfileView.classList.add('active');
-        settingsView.classList.remove('active');
         document.getElementById('tab-profile').classList.add('active');
     } else if (tabName === 'settings') {
-        shopView.classList.remove('active');
-        userProfileView.classList.remove('active');
         settingsView.classList.add('active');
         document.getElementById('tab-settings').classList.add('active');
     }
 }
 
-// Открытие страницы "Получить" (Game Profile)
+// === ЛОГИКА ИГРЫ И ВАЛИДАЦИИ ===
+
 window.openClaimView = function(gameId) {
-    console.log("Открываем игру:", gameId);
+    currentGameId = gameId;
     const game = games.find(g => g.id === gameId);
-    if (!game) {
-        tg.showAlert('Ошибка: Игра не найдена!');
-        return;
-    }
+    if (!game) return;
 
-    try {
-        // Заполнение данных
-        document.getElementById('claim-title').textContent = game.name;
-        document.getElementById('claim-reward').textContent = `Вы получите: ${game.reward}`;
-        document.getElementById('game-id-input').value = ''; // Очистить инпут
-        
-        // Установка иконки (пока заглушка цветом, можно добавить картинки)
-        const iconEl = document.querySelector('#claim-view .claim-icon');
-        iconEl.style.backgroundColor = '#FFD600'; // Желтый для примера
+    hideAllViews();
+    claimView.classList.add('active');
 
-        // Переключение видимости
-        // Скрываем все views
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        
-        // Показываем claim-view
-        claimView.classList.add('active');
-        claimView.style.display = 'block'; // Ensure it's visible
-        
-        // Скрываем таббар на странице оформления (опционально, если нужно больше места)
-        // document.querySelector('.tab-bar').style.display = 'none'; 
-        
-        console.log("Переход выполнен успешно");
-    } catch (e) {
-        console.error(e);
-        tg.showAlert('Ошибка отображения: ' + e.message);
-    }
+    // Заполнение UI
+    document.getElementById('claim-title').textContent = game.name;
+    document.getElementById('claim-reward').textContent = `Вы получите: ${game.reward}`;
+    
+    const input = document.getElementById('game-id-input');
+    input.value = '';
+    input.placeholder = game.placeholder || 'Введите ваш ID';
+    
+    // Сброс ошибок
+    input.classList.remove('error');
+    document.getElementById('error-msg').classList.remove('visible');
+    
+    // Цвет иконки (заглушка)
+    const iconEl = document.querySelector('#claim-view .claim-icon');
+    iconEl.style.backgroundColor = '#FFD600';
 };
 
-// Возврат назад
-window.goBack = function() {
-    claimView.classList.remove('active');
-    // Возвращаемся на магазин
-    switchTab('shop');
-};
+// Проверка ввода
+function validateInput(value, type) {
+    if (!value) return false;
+    value = value.trim();
+    
+    if (type === 'numeric') {
+        return /^\d+$/.test(value);
+    }
+    if (type === 'numeric_complex') {
+        // Разрешаем цифры, пробелы, скобки (для MLBB например)
+        return /^[\d\s\(\)]+$/.test(value);
+    }
+    if (type === 'tag') {
+        // Должен начинаться с #
+        return value.startsWith('#') && value.length > 3;
+    }
+    if (type === 'username') {
+        // Буквы и цифры
+        return /^[a-zA-Z0-9_]+$/.test(value);
+    }
+    return true; // Any
+}
 
-// Обработка кнопки "Получить" (Сабмит)
 window.submitClaim = function() {
     const input = document.getElementById('game-id-input');
-    if (!input.value.trim()) {
-        tg.showAlert('Пожалуйста, введите ваш ID!');
+    const errorMsgEl = document.getElementById('error-msg');
+    const val = input.value.trim();
+    
+    const game = games.find(g => g.id === currentGameId);
+    
+    // 1. Проверка на пустоту
+    if (!val) {
+        input.classList.add('error');
+        errorMsgEl.textContent = 'Поле не может быть пустым';
+        errorMsgEl.classList.add('visible');
+        tg.HapticFeedback.notificationOccurred('error');
         return;
     }
 
-    // Показать экран успеха
+    // 2. Проверка по типу валидации
+    if (game && game.validateType) {
+        const isValid = validateInput(val, game.validateType);
+        if (!isValid) {
+            input.classList.add('error');
+            errorMsgEl.textContent = game.errorMsg || 'Некорректный формат ID';
+            errorMsgEl.classList.add('visible');
+            tg.HapticFeedback.notificationOccurred('error');
+            return;
+        }
+    }
+
+    // Успех
     successOverlay.classList.add('active');
-    
-    // Вибрация (Haptic Feedback)
     tg.HapticFeedback.notificationOccurred('success');
 
-    // Через 3 секунды можно закрыть или отправить данные боту
     setTimeout(() => {
-        // tg.close(); // Можно закрыть приложение
-        // Или просто скрыть оверлей и вернуться
         successOverlay.classList.remove('active');
-        goBack();
+        switchTab('shop'); // Возврат в магазин
     }, 3000);
 };
 
-// Инициализация
-// Принудительно сбрасываем состояние UI при загрузке
+// Сброс ошибок при вводе
+document.getElementById('game-id-input').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('error-msg').classList.remove('visible');
+});
+
+// === ЮРИДИЧЕСКИЕ СТРАНИЦЫ И ПОДДЕРЖКА ===
+
+window.openPrivacy = function() {
+    hideAllViews();
+    privacyView.classList.add('active');
+};
+
+window.openTerms = function() {
+    hideAllViews();
+    termsView.classList.add('active');
+};
+
+window.openSupport = function() {
+    hideAllViews();
+    // Очистка поля
+    document.getElementById('support-msg').value = '';
+    supportView.classList.add('active');
+};
+
+window.closeSubPage = function() {
+    // Возвращаемся в настройки
+    switchTab('settings');
+};
+
+window.submitSupport = function() {
+    const textarea = document.getElementById('support-msg');
+    if (!textarea.value.trim()) {
+        tg.showAlert('Введите сообщение!');
+        return;
+    }
+    
+    tg.showAlert('Ваше обращение успешно отправлено! Мы ответим вам в ближайшее время.');
+    closeSubPage();
+};
+
+// === ИНИЦИАЛИЗАЦИЯ ===
 function initApp() {
     renderShop();
-    switchTab('shop'); // Всегда начинаем с магазина
+    switchTab('shop');
     
-    // Скрываем оверлеи если они остались
+    // Скрываем оверлеи
     successOverlay.classList.remove('active');
-    claimView.classList.remove('active');
     
-    // Установка имени пользователя если доступно
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const user = tg.initDataUnsafe.user;
         document.getElementById('username-display').textContent = 
@@ -161,6 +328,4 @@ function initApp() {
     }
 }
 
-// Запускаем инициализацию
 initApp();
-
