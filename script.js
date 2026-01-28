@@ -1,5 +1,5 @@
 // Конфигурация игр с правилами валидации
-// validateType: 'numeric' (только цифры), 'tag' (начинается с #), 'username' (буквы и цифры)
+// img: путь к картинке (относительно корня или папки images)
 const games = [
     { 
         id: 'brawl', 
@@ -8,7 +8,8 @@ const games = [
         reward: '170 Гемов',
         placeholder: '#JY8G9...',
         validateType: 'tag',
-        errorMsg: 'ID должен начинаться с # и содержать 3-12 символов'
+        errorMsg: 'ID должен начинаться с # и содержать 3-12 символов',
+        img: 'images/brawl.png' 
     },
     { 
         id: 'cod', 
@@ -17,7 +18,8 @@ const games = [
         reward: '880 CP',
         placeholder: '67426...',
         validateType: 'numeric',
-        errorMsg: 'UID должен состоять только из цифр'
+        errorMsg: 'UID должен состоять только из цифр',
+        img: 'images/cod.png'
     },
     { 
         id: 'clash', 
@@ -26,7 +28,8 @@ const games = [
         reward: '500 Гемов',
         placeholder: '#LCY8...',
         validateType: 'tag',
-        errorMsg: 'Тег должен начинаться с #'
+        errorMsg: 'Тег должен начинаться с #',
+        img: 'images/clash.png'
     },
     { 
         id: 'genshin', 
@@ -35,7 +38,8 @@ const games = [
         reward: '300 Кристаллов',
         placeholder: '700123...',
         validateType: 'numeric',
-        errorMsg: 'UID должен состоять из цифр (9 символов)'
+        errorMsg: 'UID должен состоять из цифр (9 символов)',
+        img: 'images/genshin.png'
     },
     { 
         id: 'hayday', 
@@ -44,7 +48,8 @@ const games = [
         reward: '100 Алмазов',
         placeholder: '#P8...',
         validateType: 'tag',
-        errorMsg: 'Тег фермы должен начинаться с #'
+        errorMsg: 'Тег фермы должен начинаться с #',
+        img: 'images/hayday.png'
     },
     { 
         id: 'homescapes', 
@@ -53,7 +58,8 @@ const games = [
         reward: '1000 Монет',
         placeholder: 'ID поддержки...',
         validateType: 'any', 
-        errorMsg: ''
+        errorMsg: '',
+        img: 'images/homescapes.png'
     },
     { 
         id: 'lts', 
@@ -62,7 +68,8 @@ const games = [
         reward: '500 Золота',
         placeholder: 'ID игрока',
         validateType: 'numeric',
-        errorMsg: 'ID должен быть числовым'
+        errorMsg: 'ID должен быть числовым',
+        img: 'images/lts.png'
     },
     { 
         id: 'mlbb', 
@@ -71,7 +78,8 @@ const games = [
         reward: '250 Алмазов',
         placeholder: '12345678 (1234)',
         validateType: 'numeric_complex',
-        errorMsg: 'Введите ID и ID сервера (только цифры)'
+        errorMsg: 'Введите ID и ID сервера (только цифры)',
+        img: 'images/mlbb.png'
     },
     { 
         id: 'pubg', 
@@ -80,7 +88,8 @@ const games = [
         reward: '325 UC',
         placeholder: '51234...',
         validateType: 'numeric',
-        errorMsg: 'ID должен состоять только из цифр'
+        errorMsg: 'ID должен состоять только из цифр',
+        img: 'images/pubg.png'
     },
     { 
         id: 'roblox', 
@@ -89,7 +98,8 @@ const games = [
         reward: '400 Robux',
         placeholder: 'Username',
         validateType: 'username',
-        errorMsg: 'Имя пользователя не найдено'
+        errorMsg: 'Имя пользователя не найдено',
+        img: 'images/roblox.png'
     },
     { 
         id: 'standoff', 
@@ -98,7 +108,8 @@ const games = [
         reward: '1000 Голды',
         placeholder: 'ID игрока',
         validateType: 'numeric',
-        errorMsg: 'ID должен быть числовым'
+        errorMsg: 'ID должен быть числовым',
+        img: 'images/standoff.png'
     },
     { 
         id: 'wotb', 
@@ -107,7 +118,8 @@ const games = [
         reward: '1500 Золота',
         placeholder: 'Никнейм или ID',
         validateType: 'any',
-        errorMsg: ''
+        errorMsg: '',
+        img: 'images/wotb.png'
     },
     { 
         id: 'durak', 
@@ -116,7 +128,8 @@ const games = [
         reward: '25000 Монет',
         placeholder: 'ID или Ник',
         validateType: 'any',
-        errorMsg: ''
+        errorMsg: '',
+        img: 'images/durak.png'
     }
 ];
 
@@ -145,8 +158,12 @@ function renderShop() {
     games.forEach(game => {
         const item = document.createElement('div');
         item.className = 'game-item';
+        
+        // Если картинка есть и загружена, показываем её, иначе цветная заглушка
+        const iconStyle = game.img ? `background-image: url('${game.img}');` : '';
+        
         item.innerHTML = `
-            <div class="game-icon"></div>
+            <div class="game-icon" style="${iconStyle}"></div>
             <div class="game-info">
                 <div class="game-title">${game.name}</div>
                 <div class="game-subtitle">${game.subtitle}</div>
@@ -206,9 +223,15 @@ window.openClaimView = function(gameId) {
     input.classList.remove('error');
     document.getElementById('error-msg').classList.remove('visible');
     
-    // Цвет иконки (заглушка)
+    // Цвет иконки (заглушка) или картинка
     const iconEl = document.querySelector('#claim-view .claim-icon');
-    iconEl.style.backgroundColor = '#FFD600';
+    if (game.img) {
+        iconEl.style.backgroundImage = `url('${game.img}')`;
+        iconEl.style.backgroundColor = 'transparent';
+    } else {
+        iconEl.style.backgroundImage = 'none';
+        iconEl.style.backgroundColor = '#FFD600';
+    }
 };
 
 // Проверка ввода
