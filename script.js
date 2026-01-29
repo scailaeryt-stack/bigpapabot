@@ -287,25 +287,14 @@ window.submitClaim = function() {
         }
     }
 
-    // Отправка данных боту
-    const requestData = {
-        type: 'claim',
-        game_id: currentGameId,
-        game_uid: val,
-        game_name: game.name
-    };
-    
-    // Отправляем данные боту через Telegram WebApp API
-    tg.sendData(JSON.stringify(requestData));
+    // Сохраняем счетчик в localStorage
+    userRequestsCount++;
+    localStorage.setItem('requests_count', userRequestsCount.toString());
 
     // Успех
     successOverlay.classList.add('active');
     tg.HapticFeedback.notificationOccurred('success');
 
-    // Сохраняем счетчик в localStorage
-    userRequestsCount++;
-    localStorage.setItem('requests_count', userRequestsCount.toString());
-    
     setTimeout(() => {
         successOverlay.classList.remove('active');
         switchTab('shop'); // Возврат в магазин
