@@ -151,6 +151,7 @@ const supportView = document.getElementById('support-view');
 const successOverlay = document.getElementById('success-overlay');
 
 let currentGameId = null;
+let userRequestsCount = 0; // Счетчик заявок пользователя
 
 // Рендеринг списка игр
 function renderShop() {
@@ -195,6 +196,7 @@ function switchTab(tabName) {
     } else if (tabName === 'profile') {
         userProfileView.classList.add('active');
         document.getElementById('tab-profile').classList.add('active');
+        updateProfileStats(); // Обновляем статистику при открытии профиля
     } else if (tabName === 'settings') {
         settingsView.classList.add('active');
         document.getElementById('tab-settings').classList.add('active');
@@ -285,13 +287,29 @@ window.submitClaim = function() {
         }
     }
 
+    // Отправка данных боту
+    const requestData = {
+        type: 'claim',
+        game_id: currentGameId,
+        game_uid: val,
+        game_name: game.name
+    };
+    
+    // Отправляем данные боту через Telegram WebApp API
+    tg.sendData(JSON.stringify(requestData));
+
     // Успех
     successOverlay.classList.add('active');
     tg.HapticFeedback.notificationOccurred('success');
 
+    // Сохраняем счетчик в localStorage
+    userRequestsCount++;
+    localStorage.setItem('requests_count', userRequestsCount.toString());
+    
     setTimeout(() => {
         successOverlay.classList.remove('active');
         switchTab('shop'); // Возврат в магазин
+        updateProfileStats(); // Обновляем статистику в профиле
     }, 3000);
 };
 
@@ -336,6 +354,22 @@ window.submitSupport = function() {
     closeSubPage();
 };
 
+// === ОБНОВЛЕНИЕ СТАТИСТИКИ ПРОФИЛЯ ===
+function updateProfileStats() {
+    // Обновляем отображение
+    const requestsEl = document.getElementById('requests-count');
+    const coinsEl = document.getElementById('coins-count');
+    
+    if (requestsEl) {
+        requestsEl.textContent = userRequestsCount;
+    }
+    
+    // Подсчет монет (примерно, можно настроить)
+    if (coinsEl) {
+        coinsEl.textContent = userRequestsCount * 1000; // Примерная формула
+    }
+}
+
 // === ИНИЦИАЛИЗАЦИЯ ===
 function initApp() {
     renderShop();
@@ -344,11 +378,25 @@ function initApp() {
     // Скрываем оверлеи
     successOverlay.classList.remove('active');
     
+    // Загружаем счетчик из localStorage (если есть)
+    const savedCount = localStorage.getItem('requests_count');
+    if (savedCount) {
+        userRequestsCount = parseInt(savedCount, 10);
+    }
+    
+    // Обновляем статистику при инициализации
+    updateProfileStats();
+    
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const user = tg.initDataUnsafe.user;
         document.getElementById('username-display').textContent = 
             `${user.first_name} ${user.last_name || ''}`.trim();
     }
+    
+    // Слушаем сообщения от бота (если бот отправляет данные)
+    tg.onEvent('viewportChanged', function() {
+        // Можно обновить статистику при изменении viewport
+    });
 }
 
 initApp();
